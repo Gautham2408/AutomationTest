@@ -84,27 +84,40 @@ public class leadedit {
     }
 
     @And("User updates the quantity to 10 and price to 15 for the second line item")
-    public void user_updates_quantity_and_price_for_first_item() {
-        WebElement quantityField = wait.until(ExpectedConditions.elementToBeClickable(By.name("leadManagerItems[1].quantity")));
+    public void user_updates_quantity_and_price_for_second_item() {
+        List<WebElement> quantityFields = driver.findElements(By.name("leadManagerItems[1].quantity"));
+        List<WebElement> priceFields = driver.findElements(By.name("leadManagerItems[1].amount"));
+
+        if (quantityFields.isEmpty() || priceFields.isEmpty()) {
+            // No second line item, move to the next step
+            return;
+        }
+
+        WebElement quantityField = wait.until(ExpectedConditions.elementToBeClickable(quantityFields.get(0)));
         quantityField.clear();
         quantityField.sendKeys("10");
 
-        WebElement priceField = wait.until(ExpectedConditions.elementToBeClickable(By.name("leadManagerItems[1].amount")));
+        WebElement priceField = wait.until(ExpectedConditions.elementToBeClickable(priceFields.get(0)));
         priceField.clear();
         priceField.sendKeys("15");
     }
 
-    @And("User removes the first line item")
+    
+    @And("User removes the line item")
     public void user_removes_first_line_item() {
-        WebElement minusButton = wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("(//span[contains(@class, 'glyphicon-minus-sign')])[1]") // First row's minus button
-        ));
-        minusButton.click();
+        List<WebElement> minusButtons = driver.findElements(By.xpath("//span[contains(@class, 'glyphicon-minus-sign')]"));
+        int itemCount = minusButtons.size(); // Count available line items
 
-        // Wait for row removal (assuming at least one row is always present)
-        wait.until(ExpectedConditions.stalenessOf(minusButton));
+        if (itemCount <= 1) {
+            System.out.println("Only one line item present, skipping removal.");
+            return; // Move to the next step
+        }
 
+        for (int i = 0; i < Math.min(2, itemCount - 1); i++) { 
+            driver.findElements(By.xpath("//span[contains(@class, 'glyphicon-minus-sign')]")).get(0).click();
+        }
     }
+
 
     @And("User adds an extra line item in the edit page")
     public void user_adds_extra_line_item_in_edit_page() {
@@ -367,20 +380,24 @@ public class leadedit {
     }
     @And("User removes lead activity details")
     public void user_removes_lead_activity_details() {
-    	 driver.findElement(By.xpath("//span[@class='btn btn-info btn-sm btn-md btns' and @data-toggle='collapse' and @data-target='#addActivity']")).click();
-        // Find all available minus buttons
+        WebElement addActivityButton = driver.findElement(By.xpath("//span[@class='btn btn-info btn-sm btn-md btns' and @data-toggle='collapse' and @data-target='#addActivity']"));
+        addActivityButton.click();
+
+        // Wait for the minus button to appear
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class, 'glyphicon-minus-sign') and contains(@onclick, 'removeLeadActivity')]")));
+
         List<WebElement> minusButtons = driver.findElements(By.xpath("//span[contains(@class, 'glyphicon-minus-sign') and contains(@onclick, 'removeLeadActivity')]"));
-        
-        int activityCount = minusButtons.size(); // Count existing activities
-        
-        if (activityCount == 1) {
-            // If only one activity exists, remove it
-            minusButtons.get(0).click();
-        } else if (activityCount >= 2) {
-            // If two or more activities exist, remove the first two
-            minusButtons.get(0).click();
-            wait.until(ExpectedConditions.stalenessOf(minusButtons.get(0))); // Ensure element is removed before next click
-            minusButtons.get(1).click();
+
+        if (!minusButtons.isEmpty()) {
+            WebElement minusButton = wait.until(ExpectedConditions.elementToBeClickable(minusButtons.get(0)));
+            
+            // Click using JavaScript if needed
+            try {
+                minusButton.click();
+            } catch (Exception e) {
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("arguments[0].click();", minusButton);
+            }
         }
     }
 

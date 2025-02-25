@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
 	    features = "features",
 	    glue = "stepDefinitions",
-	    tags = "@leadedit", // Runs only lead scenarios
+	    tags = "@leadedit",
 	    plugin = {"pretty", "html:target/cucumber-reports.html"},
 	    monochrome = true
 	)
