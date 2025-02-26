@@ -18,7 +18,7 @@ public class LoginSteps {
     @Given("User is on the login page")
     public void user_is_on_the_login_page() {
         if (driver == null) {
-            System.setProperty("webdriver.gecko.driver", "/home/vyoog/Downloads/Cucumber/geckodriver");
+            System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
             driver = new FirefoxDriver();
             driver.manage().window().maximize();
         }
