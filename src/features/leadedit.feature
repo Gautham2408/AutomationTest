@@ -48,7 +48,7 @@ Feature: Lead Edit Management
 #		And User fills out lead activity details1
 #		And User removes lead activity details	
 #		Then User updates the lead
-
+#
 #	Scenario: User Remove attachment in edit
     #Given User is on the login page
     #When User enters valid credentials
@@ -64,7 +64,7 @@ Feature: Lead Edit Management
 #		And User fills out lead activity details1
 #		And User removes lead activity details	
 #		Then User updates the lead
-		
+#		
 #			Scenario: User Remove lead activity details in edit
     #Given User is on the login page
     #When User enters valid credentials

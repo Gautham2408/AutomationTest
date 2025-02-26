@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Product_Item
+Bundle-SymbolicName: Product_Item
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: Product Item.jar,
+ vyoog/Downloads/Cucumber/hamcrest-core-2.2.jar,
+ vyoog/Downloads/Cucumber/cobertura-2.1.1.jar,
+ vyoog/Downloads/Cucumber/cucumber-html-0.2.7.jar,
+ vyoog/Downloads/Cucumber/cucumber-jvm-deps-1.0.5.jar,
+ vyoog/Downloads/Cucumber/cucumber-junit-1.2.2.jar,
+ vyoog/Downloads/Cucumber/cucumber-java-1.2.2.jar,
+ vyoog/Downloads/Cucumber/cucumber-core-1.2.2(1).jar,
+ vyoog/Downloads/Cucumber/cobertura-2.1.2.RELEASE.jar,
+ vyoog/Downloads/Cucumber/cucumber-reporting-3.14.0.jar,
+ vyoog/Downloads/Cucumber/mockito-all-1.10.19.jar,
+ vyoog/Downloads/Cucumber/junit-4.12.jar,
+ vyoog/Downloads/Cucumber/selenium-server-4.3.0(1).jar,
+ vyoog/Downloads/Cucumber/gherkin-2.12.2.jar
+Automatic-Module-Name: Product.Item
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: Common,
+ TestRunner,
+ com.vyg.Sales.Enquiry,
+ com.vyg.Sales.Quotation
