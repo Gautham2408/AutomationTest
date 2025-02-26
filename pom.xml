@@ -8,7 +8,6 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
         <plugins>
             <!-- Maven Compiler Plugin -->
             <plugin>
@@ -31,15 +30,13 @@
                     </includes>
                 </configuration>
             </plugin>
-  
-        
         </plugins>
-        <testResources>
-        <testResource>
-            <directory>src/resources</directory>  <!-- ✅ Adjusted for src structure -->
-        </testResource>
-    </testResources>
 
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>  <!-- ✅ Fixed -->
+            </testResource>
+        </testResources>
     </build>
 
     <dependencies>
@@ -48,7 +45,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
-            <scope>src</scope>
+            <scope>test</scope>  <!-- ✅ Fixed scope -->
         </dependency>
 
         <!-- ✅ Cucumber Java -->
@@ -63,7 +60,6 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>7.14.0</version>
-            <scope>src</scope>
         </dependency>
 
         <!-- ✅ Selenium -->
@@ -74,12 +70,11 @@
         </dependency>
 
         <!-- ✅ Extent Reports Cucumber 7 Adapter -->
-<dependency>
-    <groupId>tech.grasshopper</groupId>
-    <artifactId>extentreports-cucumber7-adapter</artifactId>
-    <version>1.12.0</version>
-</dependency>
-
+        <dependency>
+            <groupId>tech.grasshopper</groupId>
+            <artifactId>extentreports-cucumber7-adapter</artifactId>
+            <version>1.12.0</version>
+        </dependency>
 
         <!-- ✅ Extent Reports Core Library -->
         <dependency>
