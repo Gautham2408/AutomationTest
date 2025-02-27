@@ -4,6 +4,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -19,12 +20,18 @@ public class LoginSteps {
     public void user_is_on_the_login_page() {
         if (driver == null) {
             System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
-            driver = new FirefoxDriver();
+
+            FirefoxOptions options = new FirefoxOptions();
+            options.setAcceptInsecureCerts(true);  // Accept insecure certificates
+            options.addArguments("--headless");    // Run in headless mode (optional)
+            options.addArguments("--no-sandbox");  // Bypass OS security restrictions
+            options.addArguments("--disable-dev-shm-usage"); // Prevent resource issues
+
+            driver = new FirefoxDriver(options);
             driver.manage().window().maximize();
         }
         driver.get("http://192.168.1.101:8086/VyoogErp3/");
     }
-
     @When("User enters valid credentials")
     public void user_enters_valid_credentials() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
