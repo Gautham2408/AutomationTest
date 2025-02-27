@@ -4,6 +4,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -19,9 +20,21 @@ public class LoginSteps {
     public void user_is_on_the_login_page() {
         if (driver == null) {
             System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
-            driver = new FirefoxDriver();
+
+            // Check if running in Jenkins by looking for an environment variable
+            boolean isJenkins = System.getenv("JENKINS_HOME") != null;
+
+            FirefoxOptions options = new FirefoxOptions();
+            if (isJenkins) {
+                options.addArguments("--headless"); // Run headless in Jenkins
+                options.addArguments("--no-sandbox"); // Helps avoid permission issues in Jenkins
+                options.addArguments("--disable-dev-shm-usage"); // Prevents crashes in low-memory environments
+            }
+
+            driver = new FirefoxDriver(options);
             driver.manage().window().maximize();
         }
+
         driver.get("http://192.168.1.101:8086/VyoogErp3/");
     }
 
