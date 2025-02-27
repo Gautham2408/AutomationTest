@@ -24,9 +24,7 @@ public class LoginSteps {
 
             // Run in headless mode only in Jenkins
             if (System.getenv("JENKINS_HOME") != null) {
-                options.setHeadless(true);
                 options.addArguments("--headless");
-
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
             }
