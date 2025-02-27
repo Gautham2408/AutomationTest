@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(
 	    features = "src/test/resources/features",  // ✅ Correct feature file path
-	    glue = "stepDefinitions",  
+	    glue = "test/java/stepDefinitions",  
 	    tags = "@leadedit or @lead",
 	    plugin = {"pretty", "html:target/cucumber-reports.html"},
 	    monochrome = true
