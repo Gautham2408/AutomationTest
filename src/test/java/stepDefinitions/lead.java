@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class lead {
@@ -29,13 +30,29 @@ public class lead {
     }
 
     @When("User fills out lead information")
-    public void user_fills_out_lead_information() {
-        // Lead Date
-        WebElement leadDate = driver.findElement(By.xpath("//input[@id='leadDate']"));
-        leadDate.click();
-        driver.findElement(By.xpath("//td[text()='" + LocalDate.now().getDayOfMonth() + "']")).click();
+    public void user_fills_out_lead_information() throws InterruptedException {
+    	WebElement leadDate = driver.findElement(By.id("leadDate"));
+    	leadDate.click();
 
-        // Reference
+    	// Ensure the calendar is open before selecting a date
+    	Thread.sleep(2000);
+
+    	// Find the date element using a broader XPath
+    	WebElement correctDate = wait.until(ExpectedConditions.elementToBeClickable(
+    	    By.xpath("//td[contains(@class, 'day') and text()='27']")));
+
+    	// Try clicking normally
+    	try {
+    	    correctDate.click();
+    	} catch (Exception e) {
+    	    // Fallback to JavaScript click if normal click fails
+    	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", correctDate);
+    	}
+
+    	// Wait after clicking to ensure it registers
+    	Thread.sleep(2000);
+
+    
         WebElement reference = driver.findElement(By.xpath("//select[@id='reference.id']"));
         new Select(reference).selectByIndex(2);
 
